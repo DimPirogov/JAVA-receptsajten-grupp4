@@ -9,7 +9,7 @@ vi.mock("../services/recipes", () => ({
 }));
 import { getRecipes } from "../services/recipes";
 
-import Startsida from "./Startsida";
+import Startsida from "../components/Startsida";
 import { categories } from "../data/categories";
 
 const sampleRecipes = [

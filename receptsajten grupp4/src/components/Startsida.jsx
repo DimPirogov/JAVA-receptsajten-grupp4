@@ -6,7 +6,7 @@ import ReceptLista from "./Receptlista";
 import SearchBar from "./ui/SearchBar.jsx";
 import Categorybutton from "./categorybutton";
 import { categories } from "../data/categories";
-import "./Startsida.css";
+import "../css/Startsida.css";
 
 export default function Startsida() {
 	const [recipes, setRecipes] = useState([]);

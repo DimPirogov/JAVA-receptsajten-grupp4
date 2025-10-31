@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { describe, it, expect } from "vitest";
 
-import ReceptLista from "./Receptlista";
+import ReceptLista from "../components/Receptlista";
 
 const sampleRecipe = {
 	id: "r1",

@@ -8,7 +8,7 @@ import {
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { vi, beforeEach, afterEach, describe, it, expect } from "vitest";
 
-import Receptdetail from "./Receptdetail";
+import Receptdetail from "../components/Receptdetail";
 import * as recipes from "../services/recipes";
 
 describe("Receptdetail basic behaviors", () => {

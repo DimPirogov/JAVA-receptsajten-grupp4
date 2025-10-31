@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import CategoryButton from './categorybutton';
+import CategoryButton from '../components/categorybutton';
 import { test, expect } from 'vitest';
 
 test('renders button w/ correct name', () => {

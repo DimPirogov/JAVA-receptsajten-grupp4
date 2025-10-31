@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { getRecipes } from "../services/recipes";
 import ReceptLista from "./Receptlista";
 import { categories as CATEGORY_META } from "../data/categories";
-import "./Startsida.css";
+import "../css/Startsida.css";
 import SearchBar from "./ui/SearchBar.jsx";
 import CategoryButton from "./categorybutton.jsx";
 

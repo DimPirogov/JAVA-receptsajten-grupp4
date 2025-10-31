@@ -4,8 +4,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { getRecipes, postRating, updateRecipe } from "../services/recipes";
 import SearchBar from "./ui/SearchBar.jsx";
 import DifficultyBadge from "./ui/DifficultyBadge"; // 若没有可先删掉这行与下方组件
-import "./Startsida.css"; // 你已有
-import "./receptdetail.css"; // 👈 新增样式文件（第2步给出）
+import "../css/Startsida.css"; // 你已有
+import "../css/receptdetail.css"; // 👈 新增样式文件（第2步给出）
 import RatingStars from "./ui/RatingStars.jsx";
 import Categorybutton from "./categorybutton.jsx";
 import { categories } from "../data/categories";

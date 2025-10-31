@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; // for page navigation
-import "./categorybutton.css";
+import "../css/categorybutton.css";
 
 // Category button component
 export default function CategoryButton({ name, isActive }) {

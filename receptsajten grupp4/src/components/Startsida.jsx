@@ -26,6 +26,15 @@ export default function Startsida() {
 		setQuery(params.get("q") || "");
 	}, [location.search]);
 
+	useEffect(() => {
+		getCategories()
+			.then((data) => {
+				console.log("Categories from API:", data); // <- temporary, to see API response
+				setCategories(data);
+			})
+			.catch((err) => console.error("Failed to load categories:", err));
+	}, []);
+
 	// 拉取数据
 	async function fetchRecipes() {
 		setLoading(true);

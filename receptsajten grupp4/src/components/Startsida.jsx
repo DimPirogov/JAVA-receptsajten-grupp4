@@ -15,6 +15,7 @@ export default function Startsida() {
 
 	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [query, setQuery] = useState("");
+	const [categories, setCategories] = useState([]);
 
 	const location = useLocation();
 	const navigate = useNavigate();

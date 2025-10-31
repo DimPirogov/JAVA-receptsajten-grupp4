@@ -30,11 +30,31 @@ export default function Receptdetail() {
 	const [isSubmitted, setIsSubmitted] = useState(false);
 	const [selectedCategory, setSelectedCategory] = useState(null);
 
+	// Basic sanitization helper: strip tags, trim and limit length
+	function sanitizeText(input, max = 1000) {
+		if (!input && input !== 0) return "";
+		const s = String(input);
+		// remove HTML tags
+		const stripped = s.replace(/<[^>]*>/g, "");
+		// collapse whitespace and trim
+		const cleaned = stripped.replace(/\s+/g, " ").trim();
+		return cleaned.slice(0, max);
+	}
+
 	useEffect(() => {
 		if (!recipeId) return;
 		fetch(`https://grupp4-pkfud.reky.se/recipes/${recipeId}/comments`)
 			.then((res) => res.json())
-			.then((data) => setComments(Array.isArray(data) ? data : []))
+			.then((data) => {
+				const list = Array.isArray(data) ? data : [];
+				// sanitize incoming comments
+				const safe = list.map((c) => ({
+					...c,
+					name: sanitizeText(c?.name),
+					comment: sanitizeText(c?.comment),
+				}));
+				setComments(safe);
+			})
 			.catch(() => setComments([]));
 	}, [recipeId]);
 
@@ -75,8 +95,8 @@ export default function Receptdetail() {
 	const ratingsArray = Array.isArray(recipe.avgRating)
 		? recipe.avgRating.map((n) => Number(n)).filter((n) => !Number.isNaN(n))
 		: typeof recipe.avgRating === "number"
-			? [Number(recipe.avgRating)]
-			: [];
+		? [Number(recipe.avgRating)]
+		: [];
 
 	const avg =
 		ratingsArray.length > 0
@@ -102,8 +122,8 @@ export default function Receptdetail() {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
-						name: name.trim(),
-						comment: comment.trim(),
+						name: sanitizeText(name),
+						comment: sanitizeText(comment, 2000),
 					}),
 				}
 			);
@@ -121,7 +141,14 @@ export default function Receptdetail() {
 				`https://grupp4-pkfud.reky.se/recipes/${recipeId}/comments`
 			);
 			const newComments = await commentsRes.json();
-			setComments(Array.isArray(newComments) ? newComments : []);
+			const list = Array.isArray(newComments) ? newComments : [];
+			setComments(
+				list.map((c) => ({
+					...c,
+					name: sanitizeText(c?.name),
+					comment: sanitizeText(c?.comment),
+				}))
+			);
 
 			alert("Kommentar skickad");
 		} catch (e) {
@@ -326,7 +353,11 @@ export default function Receptdetail() {
 							onChange={(e) => setComment(e.target.value)}
 							disabled={isSubmitted}
 						/>
-						<button className="btn" onClick={sendComment} disabled={isSubmitted}>
+						<button
+							className="btn"
+							onClick={sendComment}
+							disabled={isSubmitted}
+						>
 							Skicka
 						</button>
 					</div>

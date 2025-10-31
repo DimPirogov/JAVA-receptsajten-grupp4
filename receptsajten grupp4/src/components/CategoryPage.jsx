@@ -70,38 +70,7 @@ export default function CategoryPage() {
 
 	return (
 		<div className="drink-app">
-			<header className="hero" style={{ minHeight: 120 }}>
-				<img src="/hero.jpg" alt="header" />
-				<Link className="hero-home" to="/">
-					Hem
-				</Link>
-
-				{/* top-right search bar (category-scoped) */}
-				<div style={{ position: "absolute", top: 10, right: 20, zIndex: 6 }}>
-					<SearchBar
-						value={query}
-						onChange={setQuery}
-						placeholder="Sök i denna kategori…"
-					/>
-				</div>
-
-				<div className="hero-text">
-					<h1 style={{ textTransform: "capitalize" }}>{prettyTitle}</h1>
-				</div>
-
-				<nav>
-					{CATEGORY_META.map((cat) => {
-						const id = cat.dbCategory.toLowerCase().replace("drinkar", "");
-						return (
-							<CategoryButton
-								key={cat.name}
-								name={cat.name}
-								isActive={categoryId === id}
-							/>
-						);
-					})}
-				</nav>
-			</header>
+			<Header query={query} setQuery={setQuery} />
 
 			<section className="drink-list">
 				{filtered.map((recipe, i) => (

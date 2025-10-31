@@ -1,0 +1,185 @@
+@use 'sass:math';
+$pr: math.div(1vw, 3.75);
+
+// 响应式断点变量
+$breakpoint-mobile: 768px;
+$breakpoint-tablet: 1024px;
+
+.top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.search {
+    display: none;
+
+    @media (max-width: $breakpoint-mobile) {
+        display: block;
+        position: absolute;
+        left: 12 * $pr;
+        top: 12 * $pr;
+    }
+}
+
+.menu {
+    display: none;
+
+    @media (max-width: $breakpoint-mobile) {
+        display: block;
+        position: absolute;
+        right: 12 * $pr;
+        top: 12 * $pr;
+    }
+}
+
+.hero-home {
+    position: absolute;
+    top: 12px;
+    left: 16px;
+    color: #fff;
+    // padding: 6px 10px;
+    // border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    z-index: 5;
+    @media (max-width: $breakpoint-mobile) {
+        top: 12 * $pr;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 16 * $pr;
+    }
+}
+
+.hero-home:hover {
+    background: none;
+    color: #fff;
+}
+
+.hero {
+    position: relative;
+    text-align: center;
+}
+
+.hero img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    filter: brightness(70%);
+}
+
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+}
+
+.hero-text h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+
+    @media (max-width: $breakpoint-mobile) {
+        font-size: 22 * $pr;
+        margin: 0;
+    }
+}
+
+.hero-text h5 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+
+    @media (max-width: $breakpoint-mobile) {
+        font-size: 12 * $pr;
+        margin: 0;
+
+    }
+}
+
+/* Category button area: centered at the bottom */
+
+.hero-nav {
+    position: absolute;
+    left: 50%;
+    bottom: 36px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 6;
+
+    // 移动端适配：横向滑动
+    @media (max-width: $breakpoint-mobile) {
+        bottom: 12 * $pr;
+        left: 0;
+        right: 0;
+        transform: none;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0 12 * $pr;
+        gap: 6 * $pr;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+}
+
+.hero-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.hero-nav .categorybutton {
+    flex: 0 0 auto;
+}
+
+
+/* Category button common */
+.hero-nav button {
+    margin: 0 5px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+
+    // 移动端缩小按钮
+    @media (max-width: $breakpoint-mobile) {
+        padding: 6 10px;
+        margin: 0 3px;
+        font-size: 12px;
+        border-radius: 5px;
+    } 
+}
+
+.hero-nav button:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* Hem button in the upper left corner */
+
+
+/* Search box in the upper right corner */
+.hero-search {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    z-index: 6;
+}
+
+/* Search input box */
+.search-input {
+    width: 240px;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    background: #fff;
+}
+
+.search-input:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+}

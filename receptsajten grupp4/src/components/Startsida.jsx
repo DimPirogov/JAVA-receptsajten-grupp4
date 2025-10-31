@@ -65,48 +65,7 @@ export default function Startsida() {
 	// Always render the hero/header. The body below will show loading/error/empty states.
 	return (
 		<div className="drink-app">
-			<header className="hero">
-				<img src="hero.jpg" alt="Drink hero background" />
-
-				{/* 返回首页用 Link，避免整页刷新 */}
-				<Link className="hero-home" to="/">
-					Hem
-				</Link>
-
-				{/* 右上角搜索框（回车同步到 ?q=） */}
-				<div className="hero-search">
-					<SearchBar
-						value={query}
-						onChange={setQuery}
-						onSubmit={(val) => {
-							const v = (val || "").trim();
-							navigate(v ? `/?q=${encodeURIComponent(v)}` : "/");
-						}}
-						placeholder="Sök recept eller ingrediens…"
-					/>
-				</div>
-
-				<div className="hero-text">
-					<h1>Drinkrecept</h1>
-					<h5>Dina favoritdrinkar samlade på ett ställe</h5>
-				</div>
-
-				<nav>
-					{categories.map((cat) => (
-						<Categorybutton
-							key={cat.name}
-							name={cat.name}
-							isActive={selectedCategory === cat.dbCategory}
-							onClick={() =>
-								setSelectedCategory(
-									selectedCategory === cat.dbCategory ? null : cat.dbCategory
-								)
-							}
-						/>
-					))}
-				</nav>
-			</header>
-
+			<Header query={query} setQuery={setQuery} navigate={navigate} />
 			<section className="drink-list">
 				{/* Loading state */}
 				{loading && <div style={{ padding: 16 }}>Loading recipes…</div>}

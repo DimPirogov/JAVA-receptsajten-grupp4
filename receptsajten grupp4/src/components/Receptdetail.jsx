@@ -132,42 +132,7 @@ export default function Receptdetail() {
 	return (
 		<div className="drink-app">
 			{/* Frame 1：头部大图 + 搜索 + 标题 */}
-			<header className="hero hero--detail">
-				<img src="/hero.jpg" alt="header" />
-				<Link className="hero-home" to="/">
-					Hem
-				</Link>
-
-				<div className="hero-search">
-					<SearchBar
-						value={query}
-						onChange={setQuery}
-						onSubmit={(val) => {
-							const v = (val || "").trim();
-							navigate(v ? `/?q=${encodeURIComponent(v)}` : "/");
-						}}
-						placeholder="Sök recept eller ingrediens…"
-					/>
-				</div>
-
-				<div className="hero-text">
-					<h1>{title}</h1>
-				</div>
-				<nav>
-					{categories.map((cat) => (
-						<Categorybutton
-							key={cat.name}
-							name={cat.name}
-							isActive={selectedCategory === cat.dbCategory}
-							onClick={() =>
-								setSelectedCategory(
-									selectedCategory === cat.dbCategory ? null : cat.dbCategory
-								)
-							}
-						/>
-					))}
-				</nav>
-			</header>
+			<Header query={query} setQuery={setQuery} />
 
 			{/* Frame 2：信息条 */}
 			<section className="detail-meta">

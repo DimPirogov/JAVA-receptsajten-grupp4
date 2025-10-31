@@ -75,7 +75,7 @@ export default function CategoryPage() {
 		return <div style={{ padding: 16, color: "crimson" }}>Error: {error}</div>;
 
 	const prettyTitle =
-		CATEGORY_META.find((c) => c.dbCategory === dbCategory)?.name ||
+		categories.find((c) => c.dbCategory === dbCategory)?.name ||
 		`${categoryId}-drinkar`;
 
 	return (
@@ -100,7 +100,7 @@ export default function CategoryPage() {
 				</div>
 
 				<nav>
-					{CATEGORY_META.map((cat) => {
+					{categories.map((cat) => {
 						const id = cat.dbCategory.toLowerCase().replace("drinkar", "");
 						return (
 							<CategoryButton

@@ -5,7 +5,7 @@ import { getRecipes } from "../services/recipes";
 import ReceptLista from "./Receptlista";
 import SearchBar from "./ui/SearchBar.jsx";
 import Categorybutton from "./categorybutton";
-import { categories } from "../data/categories";
+import { getCategories } from "../services/categories";
 import "./Startsida.css";
 
 export default function Startsida() {
@@ -15,6 +15,7 @@ export default function Startsida() {
 
 	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [query, setQuery] = useState("");
+	const [categories, setCategories] = useState([]);
 
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -24,6 +25,15 @@ export default function Startsida() {
 		const params = new URLSearchParams(location.search);
 		setQuery(params.get("q") || "");
 	}, [location.search]);
+
+	useEffect(() => {
+		getCategories()
+			.then((data) => {
+				console.log("Categories from API:", data); // <- temporary, to see API response
+				setCategories(data);
+			})
+			.catch((err) => console.error("Failed to load categories:", err));
+	}, []);
 
 	// 拉取数据
 	async function fetchRecipes() {
@@ -96,10 +106,10 @@ export default function Startsida() {
 						<Categorybutton
 							key={cat.name}
 							name={cat.name}
-							isActive={selectedCategory === cat.dbCategory}
+							isActive={selectedCategory === cat.name}
 							onClick={() =>
 								setSelectedCategory(
-									selectedCategory === cat.dbCategory ? null : cat.dbCategory
+									selectedCategory === cat.name ? null : cat.name
 								)
 							}
 						/>

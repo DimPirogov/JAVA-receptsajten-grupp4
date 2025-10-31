@@ -5,6 +5,7 @@ import { getRecipes } from "../services/recipes";
 import ReceptLista from "./Receptlista";
 import SearchBar from "./ui/SearchBar.jsx";
 import Categorybutton from "./categorybutton";
+import { getCategories } from "../services/categories";
 import "./Startsida.css";
 
 export default function Startsida() {

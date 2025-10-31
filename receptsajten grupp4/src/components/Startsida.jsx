@@ -106,10 +106,10 @@ export default function Startsida() {
 						<Categorybutton
 							key={cat.name}
 							name={cat.name}
-							isActive={selectedCategory === cat.dbCategory}
+							isActive={selectedCategory === cat.name}
 							onClick={() =>
 								setSelectedCategory(
-									selectedCategory === cat.dbCategory ? null : cat.dbCategory
+									selectedCategory === cat.name ? null : cat.name
 								)
 							}
 						/>

@@ -9,7 +9,7 @@ import "./receptdetail.css"; // 👈 新增样式文件（第2步给出）
 import RatingStars from "./ui/RatingStars.jsx";
 import Categorybutton from "./categorybutton.jsx";
 import { categories } from "../data/categories";
-
+import Header from '../components/ui/Header.jsx'
 export default function Receptdetail() {
 	const navigate = useNavigate();
 	const { recipeId } = useParams();

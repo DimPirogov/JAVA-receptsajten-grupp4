@@ -7,7 +7,7 @@ import { categories as CATEGORY_META } from "../data/categories";
 import "./Startsida.css";
 import SearchBar from "./ui/SearchBar.jsx";
 import CategoryButton from "./categorybutton.jsx";
-
+import Header from "./ui/Header.jsx";
 export default function CategoryPage() {
 	const { categoryId } = useParams(); // e.g. "gin", "rum", "tequila", "vodka"
 

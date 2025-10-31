@@ -7,7 +7,7 @@ import SearchBar from "./ui/SearchBar.jsx";
 import Categorybutton from "./categorybutton";
 import { categories } from "../data/categories";
 import "./Startsida.css";
-
+import Header from "./ui/Header.jsx";
 export default function Startsida() {
 	const [recipes, setRecipes] = useState([]);
 	const [loading, setLoading] = useState(true);

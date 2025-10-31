@@ -26,16 +26,21 @@ export default function Startsida() {
 	}, [location.search]);
 
 	// 拉取数据
-	useEffect(() => {
-		let mounted = true;
+	async function fetchRecipes() {
 		setLoading(true);
-		getRecipes()
-			.then((data) => mounted && setRecipes(Array.isArray(data) ? data : []))
-			.catch((err) => mounted && setError(err.message || "Failed to load"))
-			.finally(() => mounted && setLoading(false));
-		return () => {
-			mounted = false;
-		};
+		setError(null);
+		try {
+			const data = await getRecipes();
+			setRecipes(Array.isArray(data) ? data : []);
+		} catch (err) {
+			setError(err?.message || "Failed to load");
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	useEffect(() => {
+		fetchRecipes();
 	}, []);
 
 	// 分类 + 关键词 联合过滤
@@ -110,6 +115,9 @@ export default function Startsida() {
 				{!loading && error && (
 					<div style={{ padding: 16, color: "crimson" }}>
 						Kunde inte kontakta databasen: {String(error)}
+						<button className="recept-button" onClick={fetchRecipes}>
+							Försök igen
+						</button>
 					</div>
 				)}
 

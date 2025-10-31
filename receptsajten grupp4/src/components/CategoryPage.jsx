@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getRecipes } from "../services/recipes";
 import ReceptLista from "./Receptlista";
-import { categories as CATEGORY_META } from "../data/categories";
+import { getCategories } from "../services/categories";
 import "./Startsida.css";
 import SearchBar from "./ui/SearchBar.jsx";
 import CategoryButton from "./categorybutton.jsx";
@@ -13,11 +13,21 @@ export default function CategoryPage() {
 
 	// data state
 	const [recipes, setRecipes] = useState([]);
+	const [categories, setCategories] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
 	// local search state (category-scoped)
 	const [query, setQuery] = useState("");
+
+	useEffect(() => {
+        getCategories()
+            .then((data) => {
+                console.log("Categories from API:", data);
+                setCategories(data);
+            })
+            .catch((err) => console.error("Failed to load categories:", err));
+    }, []);
 
 	// Map route param ("gin") -> real backend category key ("gindrinkar")
 	const dbCategory = useMemo(() => {

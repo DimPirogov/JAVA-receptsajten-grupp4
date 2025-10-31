@@ -32,13 +32,13 @@ export default function CategoryPage() {
 	// Map route param ("gin") -> real backend category key ("gindrinkar")
 	const dbCategory = useMemo(() => {
 		const id = (categoryId || "").toLowerCase();
-		const found = CATEGORY_META.find(
+		const found = categories.find(
 			(c) =>
 				c.dbCategory?.toLowerCase().includes(id) || // dbCategory contains "gin"
 				c.name?.toLowerCase().startsWith(id) // or "Gindrinkar" starts with "gin"
 		);
 		return found?.dbCategory || id;
-	}, [categoryId]);
+	}, [categoryId,categories]);
 
 	// Fetch all recipes once
 	useEffect(() => {

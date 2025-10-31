@@ -15,8 +15,13 @@ vi.mock("../services/recipes", () => ({
 }));
 import { getRecipes } from "../services/recipes";
 
-import Startsida from "./Startsida";
-import { categories } from "../data/categories";
+vi.mock("../services/categories", () => ({
+	getCategories: vi.fn(),
+}));
+
+import { getCategories } from "../services/categories";
+
+import Startsida from "../components/Startsida";
 
 const sampleRecipes = [
 	{
@@ -35,9 +40,19 @@ const sampleRecipes = [
 	},
 ];
 
+const mockCategories = [
+	{ name: "Gin", count: 3 },
+	{ name: "Rom", count: 2 },
+	{ name: "Tequila", count: 1 },
+	{ name: "Vodka", count: 4 }
+];
+
 describe("Startsida", () => {
 	beforeEach(() => {
 		getRecipes.mockReset();
+		getCategories.mockReset();
+
+		getCategories.mockResolvedValue(mockCategories);
 	});
 
 	it("renders category buttons and recipe list", async () => {
@@ -52,7 +67,7 @@ describe("Startsida", () => {
 		);
 
 		// categories from data should be rendered as buttons
-		for (const c of categories) {
+		for (const c of mockCategories) {
 			expect(await screen.findByText(c.name)).toBeInTheDocument();
 		}
 
@@ -60,7 +75,7 @@ describe("Startsida", () => {
 		expect(await screen.findByText("Gin Fizz")).toBeInTheDocument();
 		expect(await screen.findByText("Rum Punch")).toBeInTheDocument();
 	});
-
+	
 	it("applies ?q= search filter from URL", async () => {
 		getRecipes.mockResolvedValue(sampleRecipes);
 

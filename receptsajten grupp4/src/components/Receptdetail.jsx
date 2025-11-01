@@ -9,7 +9,7 @@ import "./receptdetail.css"; // 👈 新增样式文件（第2步给出）
 import RatingStars from "./ui/RatingStars.jsx";
 import Categorybutton from "./categorybutton.jsx";
 import { getCategories } from "../services/categories";
-import { sanitizeText,sanitizeUrlPart } from "../utils/sanitize.js";
+import { sanitizeText, sanitizeUrlPart } from "../utils/sanitize.js";
 
 export default function Receptdetail() {
 	const navigate = useNavigate();
@@ -33,13 +33,13 @@ export default function Receptdetail() {
 	const [categories, setCategories] = useState([]);
 
 	useEffect(() => {
-        getCategories()
-            .then((data) => {
-                console.log("Categories from API:", data);
-                setCategories(data);
-            })
-            .catch((err) => console.error("Failed to load categories:", err));
-    }, []);
+		getCategories()
+			.then((data) => {
+				console.log("Categories from API:", data);
+				setCategories(data);
+			})
+			.catch((err) => console.error("Failed to load categories:", err));
+	}, []);
 
 	useEffect(() => {
 		if (!recipeId) return;
@@ -53,6 +53,7 @@ export default function Receptdetail() {
 					name: sanitizeText(c?.name, 60),
 					comment: sanitizeText(c?.comment, 2000),
 				}));
+				setComments(safe);
 			})
 			.catch(() => setComments([]));
 	}, [recipeId]);
@@ -94,8 +95,8 @@ export default function Receptdetail() {
 	const ratingsArray = Array.isArray(recipe.avgRating)
 		? recipe.avgRating.map((n) => Number(n)).filter((n) => !Number.isNaN(n))
 		: typeof recipe.avgRating === "number"
-		? [Number(recipe.avgRating)]
-		: [];
+			? [Number(recipe.avgRating)]
+			: [];
 
 	const avg =
 		ratingsArray.length > 0

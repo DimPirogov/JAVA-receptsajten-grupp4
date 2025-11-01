@@ -9,6 +9,7 @@ import "./receptdetail.css"; // 👈 新增样式文件（第2步给出）
 import RatingStars from "./ui/RatingStars.jsx";
 import Categorybutton from "./categorybutton.jsx";
 import { getCategories } from "../services/categories";
+import { sanitizeText,sanitizeUrlPart } from "../utils/sanitize.js";
 
 export default function Receptdetail() {
 	const navigate = useNavigate();

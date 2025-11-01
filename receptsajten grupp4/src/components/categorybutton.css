@@ -9,10 +9,22 @@
 }
 
 .hero nav .categorybutton.active {
-    background-color: #444 !important;
-    border: 2px solid white;
+    /* background-color: #444 !important; */
+    /* border: 2px solid white; */
+    font-weight: bold;
+    border: none;
+}
+button {
+  outline: none;
 }
 
+button:focus {
+  outline: none;
+}
+
+button:active {
+  background-color: inherit; /* 或你自定义颜色 */
+}
 @media (max-width: 720px) {
     .hero nav .categorybutton {
         padding: 5px 9px;

@@ -112,6 +112,14 @@
 	padding: 20px;
 }
 
+@media (max-width:750px) {
+	.drink-list {
+		grid-template-columns: 1fr;
+		gap: 20px;
+		padding: 0;
+	}
+}
+
 .no-result {
 	padding: 12px 0;
 	color: #666;
@@ -159,6 +167,13 @@ nav {
 	flex: 1 1 60%;
 }
 
+@media (max-width:750px) {
+	.recipe-item .recipe-content {
+		padding: 8px;
+		flex: 1 1 60%;
+	}
+}
+
 .recipe-content {
 	text-align: left;
 }
@@ -171,6 +186,7 @@ nav {
 	display: block;
 	margin-top: 8px;
 }
+
 .recipe-meta .time,
 .recipe-meta .price {
 	display: block;
@@ -241,6 +257,7 @@ nav {
 	line-height: 1;
 	vertical-align: middle;
 }
+
 .rating span.active {
 	color: gold;
 }
@@ -319,7 +336,7 @@ textarea {
 }
 
 button {
-	margin-top: 10px;
+	/* margin-top: 10px; */
 	padding: 8px 16px;
 	background: #00704a;
 	color: white;
@@ -346,22 +363,27 @@ button:hover {
 	.recipe {
 		flex-direction: column;
 	}
+
 	.recipe-item {
 		flex-direction: column !important;
 	}
+
 	.recipe-item .recipe-media,
 	.recipe-item .recipe-content {
 		max-width: 100%;
 		flex: 1 1 100%;
 	}
+
 	.hero-search {
 		right: 8px;
 		top: 8px;
 	}
+
 	.search-input {
 		min-width: 180px;
 	}
 }
+
 /* simple search input style */
 .search-input {
 	width: 240px;
@@ -372,6 +394,7 @@ button:hover {
 	outline: none;
 	background: #fff;
 }
+
 .search-input:focus {
 	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
 }

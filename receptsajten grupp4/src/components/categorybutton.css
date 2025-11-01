@@ -21,7 +21,9 @@ button {
 button:focus {
   outline: none;
 }
-
+.bold{
+    font-weight: 900;
+}
 button:active {
   background-color: inherit; /* 或你自定义颜色 */
 }

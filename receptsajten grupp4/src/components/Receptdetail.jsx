@@ -8,7 +8,7 @@ import "./Startsida.css"; // 你已有
 import "./receptdetail.css"; // 👈 新增样式文件（第2步给出）
 import RatingStars from "./ui/RatingStars.jsx";
 import Categorybutton from "./categorybutton.jsx";
-import { categories } from "../data/categories";
+import { getCategories } from "../services/categories";
 
 export default function Receptdetail() {
 	const navigate = useNavigate();
@@ -29,6 +29,16 @@ export default function Receptdetail() {
 	const [comments, setComments] = useState([]);
 	const [isSubmitted, setIsSubmitted] = useState(false);
 	const [selectedCategory, setSelectedCategory] = useState(null);
+	const [categories, setCategories] = useState([]);
+
+	useEffect(() => {
+        getCategories()
+            .then((data) => {
+                console.log("Categories from API:", data);
+                setCategories(data);
+            })
+            .catch((err) => console.error("Failed to load categories:", err));
+    }, []);
 
 	// Basic sanitization helper: strip tags, trim and limit length
 	function sanitizeText(input, max = 1000) {

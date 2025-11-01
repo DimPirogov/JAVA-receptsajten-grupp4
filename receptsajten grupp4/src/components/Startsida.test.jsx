@@ -1,5 +1,11 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import {
+	render,
+	screen,
+	waitFor,
+	fireEvent,
+	within,
+} from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { vi, describe, it, beforeEach, expect } from "vitest";
 
@@ -9,8 +15,13 @@ vi.mock("../services/recipes", () => ({
 }));
 import { getRecipes } from "../services/recipes";
 
-import Startsida from "./Startsida";
-import { categories } from "../data/categories";
+vi.mock("../services/categories", () => ({
+	getCategories: vi.fn(),
+}));
+
+import { getCategories } from "../services/categories";
+
+import Startsida from "../components/Startsida";
 
 const sampleRecipes = [
 	{
@@ -29,9 +40,19 @@ const sampleRecipes = [
 	},
 ];
 
+const mockCategories = [
+	{ name: "Gin", count: 3 },
+	{ name: "Rom", count: 2 },
+	{ name: "Tequila", count: 1 },
+	{ name: "Vodka", count: 4 }
+];
+
 describe("Startsida", () => {
 	beforeEach(() => {
 		getRecipes.mockReset();
+		getCategories.mockReset();
+
+		getCategories.mockResolvedValue(mockCategories);
 	});
 
 	it("renders category buttons and recipe list", async () => {
@@ -46,7 +67,7 @@ describe("Startsida", () => {
 		);
 
 		// categories from data should be rendered as buttons
-		for (const c of categories) {
+		for (const c of mockCategories) {
 			expect(await screen.findByText(c.name)).toBeInTheDocument();
 		}
 
@@ -54,7 +75,7 @@ describe("Startsida", () => {
 		expect(await screen.findByText("Gin Fizz")).toBeInTheDocument();
 		expect(await screen.findByText("Rum Punch")).toBeInTheDocument();
 	});
-
+	
 	it("applies ?q= search filter from URL", async () => {
 		getRecipes.mockResolvedValue(sampleRecipes);
 
@@ -72,46 +93,85 @@ describe("Startsida", () => {
 		await waitFor(() => {
 			expect(screen.queryByText("Rum Punch")).not.toBeInTheDocument();
 		});
-
 	});
 
-  // testar visa betyg med korrekt antal fyllda stjärnor
-  it("renders the correct number of filled stars for avgRating", async () => {
-    const rated = [
-      {
-        id: "r3",
-        _id: "r3",
-        title: "Starred Drink",
-        imageUrl: "/star.jpg",
-        timeInMins: 7,
-        ingredients: ["Thing"],
-        avgRating: 3,
-      },
-    ];
+	// testar visa betyg med korrekt antal fyllda stjärnor
+	it("renders the correct number of filled stars for avgRating", async () => {
+		const rated = [
+			{
+				id: "r3",
+				_id: "r3",
+				title: "Starred Drink",
+				imageUrl: "/star.jpg",
+				timeInMins: 7,
+				ingredients: ["Thing"],
+				avgRating: 3,
+			},
+		];
 
-    getRecipes.mockResolvedValue(rated);
+		getRecipes.mockResolvedValue(rated);
 
-    render(
-      <MemoryRouter initialEntries={["/"]}>
-        <Routes>
-          <Route path="/" element={<Startsida />} />
-        </Routes>
-      </MemoryRouter>
-    );
+		render(
+			<MemoryRouter initialEntries={["/"]}>
+				<Routes>
+					<Route path="/" element={<Startsida />} />
+				</Routes>
+			</MemoryRouter>
+		);
 
-    // wait for the recipe title to appear
-    expect(await screen.findByText("Starred Drink")).toBeInTheDocument();
+		// wait for the recipe title to appear
+		expect(await screen.findByText("Starred Drink")).toBeInTheDocument();
 
-    // locate the article node for this recipe and then the rating container inside it
-    const titleNode = screen.getByText("Starred Drink");
-    const article = titleNode.closest("article");
-    expect(article).toBeTruthy();
+		// locate the article node for this recipe and then the rating container inside it
+		const titleNode = screen.getByText("Starred Drink");
+		const article = titleNode.closest("article");
+		expect(article).toBeTruthy();
 
-    const ratingEl = article.querySelector(".rating");
-    expect(ratingEl).toBeTruthy();
+		const ratingEl = article.querySelector(".rating");
+		expect(ratingEl).toBeTruthy();
 
-    // count filled (active) stars
-    const filled = ratingEl.querySelectorAll(".active");
-    expect(filled.length).toBe(3);
-  });
+		// count filled (active) stars
+		const filled = ratingEl.querySelectorAll(".active");
+		expect(filled.length).toBe(3);
+	});
+
+	it("shows retry button on load error and retries when clicked", async () => {
+		const sample = [
+			{
+				_id: "r1",
+				title: "Gin Fizz",
+				imageUrl: "/g.jpg",
+				timeInMins: 5,
+				ingredients: ["Gin"],
+			},
+		];
+
+		// first call fails, second call returns data
+		getRecipes
+			.mockRejectedValueOnce(new Error("Network fail"))
+			.mockResolvedValueOnce(sample);
+
+		render(
+			<MemoryRouter initialEntries={["/"]}>
+				<Routes>
+					<Route path="/" element={<Startsida />} />
+				</Routes>
+			</MemoryRouter>
+		);
+
+		// error shown
+		const err = await screen.findByText(/Kunde inte kontakta databasen/i);
+		expect(err).toBeInTheDocument();
+
+		// find retry button inside the error container and click
+		const retry = within(err.parentElement).getByRole("button", {
+			name: /försök igen/i,
+		});
+		expect(retry).toBeInTheDocument();
+
+		fireEvent.click(retry);
+
+		// after retry resolves, recipe appears
+		expect(await screen.findByText("Gin Fizz")).toBeInTheDocument();
+	});
 });

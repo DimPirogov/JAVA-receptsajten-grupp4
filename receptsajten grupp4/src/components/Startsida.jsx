@@ -7,6 +7,7 @@ import SearchBar from "./ui/SearchBar.jsx";
 import Categorybutton from "./categorybutton";
 import { getCategories } from "../services/categories";
 import "./Startsida.css";
+import { sanitizeUrlPart } from "../utils/sanitize.js";
 
 export default function Startsida() {
 	const [recipes, setRecipes] = useState([]);

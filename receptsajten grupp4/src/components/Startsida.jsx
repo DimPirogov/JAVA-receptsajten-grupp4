@@ -24,7 +24,8 @@ export default function Startsida() {
 	// 初始化 & 每次 URL 变化时，从 ?q= 读入搜索词
 	useEffect(() => {
 		const params = new URLSearchParams(location.search);
-		setQuery(params.get("q") || "");
+		const q = params.get("q") || "";
+		setQuery(sanitizeText(q, 120));
 	}, [location.search]);
 
 	useEffect(() => {

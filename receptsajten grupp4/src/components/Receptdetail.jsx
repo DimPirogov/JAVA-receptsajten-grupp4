@@ -40,17 +40,6 @@ export default function Receptdetail() {
             .catch((err) => console.error("Failed to load categories:", err));
     }, []);
 
-	// Basic sanitization helper: strip tags, trim and limit length
-	function sanitizeText(input, max = 1000) {
-		if (!input && input !== 0) return "";
-		const s = String(input);
-		// remove HTML tags
-		const stripped = s.replace(/<[^>]*>/g, "");
-		// collapse whitespace and trim
-		const cleaned = stripped.replace(/\s+/g, " ").trim();
-		return cleaned.slice(0, max);
-	}
-
 	useEffect(() => {
 		if (!recipeId) return;
 		fetch(`https://grupp4-pkfud.reky.se/recipes/${recipeId}/comments`)

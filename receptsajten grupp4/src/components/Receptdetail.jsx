@@ -122,7 +122,7 @@ export default function Receptdetail() {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
-						name: sanitizeText(name),
+						name: sanitizeText(name, 60),
 						comment: sanitizeText(comment, 2000),
 					}),
 				}
@@ -145,8 +145,8 @@ export default function Receptdetail() {
 			setComments(
 				list.map((c) => ({
 					...c,
-					name: sanitizeText(c?.name),
-					comment: sanitizeText(c?.comment),
+					name: sanitizeText(c?.name, 60),
+					comment: sanitizeText(c?.comment, 2000),
 				}))
 			);
 
@@ -185,10 +185,10 @@ export default function Receptdetail() {
 						<Categorybutton
 							key={cat.name}
 							name={cat.name}
-							isActive={selectedCategory === cat.dbCategory}
+							isActive={selectedCategory === cat.name}
 							onClick={() =>
 								setSelectedCategory(
-									selectedCategory === cat.dbCategory ? null : cat.dbCategory
+									selectedCategory === cat.name ? null : cat.name
 								)
 							}
 						/>

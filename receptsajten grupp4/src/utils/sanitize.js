@@ -8,5 +8,9 @@ export function sanitizeText(input, max = 1000) {
     })
         .replace(/\s+/g, " ")
         .trim();
-    return cleaned.slice(0, max);
+    return cleaned.slice(0, max);   
+}
+
+export function sanitizeUrlPart(input, max=200){
+    return encodeURIComponent(sanitizeText(input,max));
 }

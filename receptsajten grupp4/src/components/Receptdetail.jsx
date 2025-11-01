@@ -50,10 +50,9 @@ export default function Receptdetail() {
 				// sanitize incoming comments
 				const safe = list.map((c) => ({
 					...c,
-					name: sanitizeText(c?.name),
-					comment: sanitizeText(c?.comment),
+					name: sanitizeText(c?.name, 60),
+					comment: sanitizeText(c?.comment, 2000),
 				}));
-				setComments(safe);
 			})
 			.catch(() => setComments([]));
 	}, [recipeId]);
@@ -168,10 +167,10 @@ export default function Receptdetail() {
 				<div className="hero-search">
 					<SearchBar
 						value={query}
-						onChange={setQuery}
+						onChange={(v) => setQuery(sanitizeText(v, 120))}
 						onSubmit={(val) => {
-							const v = (val || "").trim();
-							navigate(v ? `/?q=${encodeURIComponent(v)}` : "/");
+							const q = sanitizeUrlPart(val, 120)
+							navigate(q ? `/?q=${q}` : "/");
 						}}
 						placeholder="Sök recept eller ingrediens…"
 					/>

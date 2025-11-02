@@ -317,7 +317,7 @@ export default function Receptdetail() {
 										setHasRated(true);
 										setRating(0);
 										setRatedMessage("Tack för ditt betyg!");
-									} catch (e) {
+									} catch {
 										setRatedMessage("Kunde inte spara omdömet. Försök igen.");
 									}
 								}}

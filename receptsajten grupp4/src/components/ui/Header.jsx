@@ -78,12 +78,12 @@ export default function Header({ query, setQuery, navigate }) {
   return (
     <header className={styles['hero']}>
       <img src="/hero.jpg" alt="Drink hero background" />
-      <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles['search']}><path d="M21 38C30.3888 38 38 30.3888 38 21C38 11.6112 30.3888 4 21 4C11.6112 4 4 11.6112 4 21C4 30.3888 11.6112 38 21 38Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round" /><path d="M26.657 14.3431C25.2093 12.8954 23.2093 12 21.0001 12C18.791 12 16.791 12.8954 15.3433 14.3431" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /><path d="M33.2216 33.2217L41.7069 41.707" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles['search']}><path d="M21 38C30.3888 38 38 30.3888 38 21C38 11.6112 30.3888 4 21 4C11.6112 4 4 11.6112 4 21C4 30.3888 11.6112 38 21 38Z" fill="none" stroke="#fff" strokeWidth="4" strokeLinejoin="round" /><path d="M26.657 14.3431C25.2093 12.8954 23.2093 12 21.0001 12C18.791 12 16.791 12.8954 15.3433 14.3431" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" /><path d="M33.2216 33.2217L41.7069 41.707" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" /></svg>
 
       <Link className={styles['hero-home']} to="/">Hem</Link>
 
 
-      <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles['menu']}><path d="M7.94971 11.9497H39.9497" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /><path d="M7.94971 23.9497H39.9497" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /><path d="M7.94971 35.9497H39.9497" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles['menu']}><path d="M7.94971 11.9497H39.9497" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" /><path d="M7.94971 23.9497H39.9497" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" /><path d="M7.94971 35.9497H39.9497" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" /></svg>
       <div className={styles['hero-search']}>
 
         {

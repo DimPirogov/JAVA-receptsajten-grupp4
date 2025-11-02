@@ -189,7 +189,7 @@ describe("Startsida", () => {
                 </MemoryRouter>
             );
 
-			//väntar på input i search
+			//väntar på input i URL
 			await waitFor(() => {
                 expect(screen.getByPlaceholderText(/Sök recept/i)).toBeInTheDocument();
             });
@@ -205,6 +205,39 @@ describe("Startsida", () => {
                 s.textContent.includes("alert('XSS')")
             );
             expect(hasXSS).toBe(false);
+		});
+
+		it("sanitizes XSS when typing in search bar", async () => {
+			 getRecipes.mockResolvedValue(sampleRecipes);
+            
+            render(
+                <MemoryRouter initialEntries={["/"]}>
+                    <Routes>
+                        <Route path="/" element={<Startsida />} />
+                    </Routes>
+                </MemoryRouter>
+            );
+
+            await waitFor(() => {
+                expect(screen.getByPlaceholderText(/Sök recept/i)).toBeInTheDocument();
+            });
+
+            const searchInput = screen.getByPlaceholderText(/Sök recept/i);
+            
+            // XSS attack
+            fireEvent.change(searchInput, {
+                target: { value: '<img src=x onerror=alert("hacked")>' },
+            });
+
+            // Input bör va rensat (ingen <img etc)
+            await waitFor(() => {
+                expect(searchInput.value).not.toContain("onerror");
+                expect(searchInput.value).not.toContain("<img");
+            });
+
+            // Inga farliga element i DOM
+            const dangerousImages = document.querySelectorAll("img[onerror]");
+            expect(dangerousImages.length).toBe(0);
 		});
 	})
 });

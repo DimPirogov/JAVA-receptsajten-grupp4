@@ -1,27 +1,19 @@
 import React from "react";
-import {
-	render,
-	screen,
-	waitFor,
-	fireEvent,
-	within,
-} from "@testing-library/react";
+import {render,screen,waitFor,fireEvent,within,} from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { vi, describe, it, beforeEach, expect } from "vitest";
+import { getRecipes } from "../services/recipes";
+import { getCategories } from "../services/categories";
+import Startsida from "./Startsida";
 
 // mock the recipes service
 vi.mock("../services/recipes", () => ({
 	getRecipes: vi.fn(),
 }));
-import { getRecipes } from "../services/recipes";
 
 vi.mock("../services/categories", () => ({
 	getCategories: vi.fn(),
 }));
-
-import { getCategories } from "../services/categories";
-
-import Startsida from "../components/Startsida";
 
 const sampleRecipes = [
 	{
@@ -51,7 +43,6 @@ describe("Startsida", () => {
 	beforeEach(() => {
 		getRecipes.mockReset();
 		getCategories.mockReset();
-
 		getCategories.mockResolvedValue(mockCategories);
 	});
 
@@ -174,4 +165,99 @@ describe("Startsida", () => {
 		// after retry resolves, recipe appears
 		expect(await screen.findByText("Gin Fizz")).toBeInTheDocument();
 	});
+
+	describe("XSS Protection", () => {
+		it("sanitizes XSS in URL query parameter", async () => {
+			getRecipes.mockResolvedValue(sampleRecipes);
+
+			//URL med XSS försök
+			const xssQuery = "<script>alert('XSS')</script>";
+
+			render(
+                <MemoryRouter initialEntries={[`/?q=${encodeURIComponent(xssQuery)}`]}>
+                    <Routes>
+                        <Route path="/" element={<Startsida />} />
+                    </Routes>
+                </MemoryRouter>
+            );
+
+			//väntar på input i URL
+			await waitFor(() => {
+                expect(screen.getByPlaceholderText(/Sök recept/i)).toBeInTheDocument();
+            });
+
+			//Inputen bör ha ren textning
+			const searchInput = screen.getByPlaceholderText(/Sök recept/i);
+            expect(searchInput.value).not.toContain("<script>");
+            expect(searchInput.value).not.toContain("alert");
+
+			//inga scripts borde finnas i DOM
+			const scripts = document.querySelectorAll("script");
+            const hasXSS = Array.from(scripts).some((s) => 
+                s.textContent.includes("alert('XSS')")
+            );
+            expect(hasXSS).toBe(false);
+		});
+
+		it("sanitizes XSS when typing in search bar", async () => {
+			 getRecipes.mockResolvedValue(sampleRecipes);
+            
+            render(
+                <MemoryRouter initialEntries={["/"]}>
+                    <Routes>
+                        <Route path="/" element={<Startsida />} />
+                    </Routes>
+                </MemoryRouter>
+            );
+
+            await waitFor(() => {
+                expect(screen.getByPlaceholderText(/Sök recept/i)).toBeInTheDocument();
+            });
+
+            const searchInput = screen.getByPlaceholderText(/Sök recept/i);
+            
+            // XSS attack
+            fireEvent.change(searchInput, {
+                target: { value: '<img src=x onerror=alert("hacked")>' },
+            });
+
+            // Input bör va rensat (ingen <img etc)
+            await waitFor(() => {
+                expect(searchInput.value).not.toContain("onerror");
+                expect(searchInput.value).not.toContain("<img");
+            });
+
+            // Inga farliga element i DOM
+            const dangerousImages = document.querySelectorAll("img[onerror]");
+            expect(dangerousImages.length).toBe(0);
+		});
+
+		it("limits search query length to 120 characters", async () => {
+            getRecipes.mockResolvedValue(sampleRecipes);
+            
+            render(
+                <MemoryRouter initialEntries={["/"]}>
+                    <Routes>
+                        <Route path="/" element={<Startsida />} />
+                    </Routes>
+                </MemoryRouter>
+            );
+
+            await waitFor(() => {
+                expect(screen.getByPlaceholderText(/Sök recept/i)).toBeInTheDocument();
+            });
+
+            const searchInput = screen.getByPlaceholderText(/Sök recept/i);
+            
+            // Skriv in mer än 120 chars
+            const longString = "a".repeat(150);
+            fireEvent.change(searchInput, { target: { value: longString } });
+
+            await waitFor(() => {
+                expect(searchInput.value.length).toBeLessThanOrEqual(120);
+            });
+        });
+	});
 });
+
+

@@ -1,27 +1,19 @@
 import React from "react";
-import {
-	render,
-	screen,
-	waitFor,
-	fireEvent,
-	within,
-} from "@testing-library/react";
+import {render,screen,waitFor,fireEvent,within,} from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { vi, describe, it, beforeEach, expect } from "vitest";
+import { getRecipes } from "../services/recipes";
+import { getCategories } from "../services/categories";
+import Startsida from "./Startsida";
 
 // mock the recipes service
 vi.mock("../services/recipes", () => ({
 	getRecipes: vi.fn(),
 }));
-import { getRecipes } from "../services/recipes";
 
 vi.mock("../services/categories", () => ({
 	getCategories: vi.fn(),
 }));
-
-import { getCategories } from "../services/categories";
-
-import Startsida from "./Startsida";
 
 const sampleRecipes = [
 	{
@@ -257,7 +249,7 @@ describe("Startsida", () => {
 
             const searchInput = screen.getByPlaceholderText(/Sök recept/i);
             
-            // Type more than 120 characters
+            // Skriv in mer än 120 chars
             const longString = "a".repeat(150);
             fireEvent.change(searchInput, { target: { value: longString } });
 

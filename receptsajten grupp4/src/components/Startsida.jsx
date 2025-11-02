@@ -31,10 +31,9 @@ export default function Startsida() {
 	useEffect(() => {
 		getCategories()
 			.then((data) => {
-				console.log("Categories from API:", data); // <- temporary, to see API response
 				setCategories(data);
 			})
-			.catch((err) => console.error("Failed to load categories:", err));
+			.catch(() => {});
 	}, []);
 
 	// 拉取数据

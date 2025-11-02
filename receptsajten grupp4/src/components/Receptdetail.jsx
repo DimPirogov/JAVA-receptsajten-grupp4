@@ -35,10 +35,10 @@ export default function Receptdetail() {
 	useEffect(() => {
 		getCategories()
 			.then((data) => {
-				console.log("Categories from API:", data);
 				setCategories(data);
 			})
-			.catch((err) => console.error("Failed to load categories:", err));
+			.catch(() => {
+			});
 	}, []);
 
 	useEffect(() => {
@@ -318,7 +318,6 @@ export default function Receptdetail() {
 										setRating(0);
 										setRatedMessage("Tack för ditt betyg!");
 									} catch (e) {
-										console.error(e);
 										setRatedMessage("Kunde inte spara omdömet. Försök igen.");
 									}
 								}}

@@ -239,7 +239,33 @@ describe("Startsida", () => {
             const dangerousImages = document.querySelectorAll("img[onerror]");
             expect(dangerousImages.length).toBe(0);
 		});
-	})
+
+		it("limits search query length to 120 characters", async () => {
+            getRecipes.mockResolvedValue(sampleRecipes);
+            
+            render(
+                <MemoryRouter initialEntries={["/"]}>
+                    <Routes>
+                        <Route path="/" element={<Startsida />} />
+                    </Routes>
+                </MemoryRouter>
+            );
+
+            await waitFor(() => {
+                expect(screen.getByPlaceholderText(/Sök recept/i)).toBeInTheDocument();
+            });
+
+            const searchInput = screen.getByPlaceholderText(/Sök recept/i);
+            
+            // Type more than 120 characters
+            const longString = "a".repeat(150);
+            fireEvent.change(searchInput, { target: { value: longString } });
+
+            await waitFor(() => {
+                expect(searchInput.value.length).toBeLessThanOrEqual(120);
+            });
+        });
+	});
 });
 
 

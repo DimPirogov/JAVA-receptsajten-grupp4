@@ -7,6 +7,7 @@ import SearchBar from "./ui/SearchBar.jsx";
 import Categorybutton from "./categorybutton";
 import { getCategories } from "../services/categories";
 import "./Startsida.css";
+import { sanitizeUrlPart, sanitizeText } from "../utils/sanitize.js";
 
 export default function Startsida() {
 	const [recipes, setRecipes] = useState([]);
@@ -23,7 +24,8 @@ export default function Startsida() {
 	// 初始化 & 每次 URL 变化时，从 ?q= 读入搜索词
 	useEffect(() => {
 		const params = new URLSearchParams(location.search);
-		setQuery(params.get("q") || "");
+		const q = params.get("q") || "";
+		setQuery(sanitizeText(q, 120));
 	}, [location.search]);
 
 	useEffect(() => {
@@ -87,10 +89,10 @@ export default function Startsida() {
 				<div className="hero-search">
 					<SearchBar
 						value={query}
-						onChange={setQuery}
+						onChange={(v) => setQuery(sanitizeText(v, 120))}
 						onSubmit={(val) => {
-							const v = (val || "").trim();
-							navigate(v ? `/?q=${encodeURIComponent(v)}` : "/");
+							const q = sanitizeUrlPart(val, 120)
+							navigate(q ? `/?q=${q}` : "/")
 						}}
 						placeholder="Sök recept eller ingrediens…"
 					/>

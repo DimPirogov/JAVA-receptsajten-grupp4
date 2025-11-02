@@ -9,6 +9,7 @@ import "./receptdetail.css"; // 👈 新增样式文件（第2步给出）
 import RatingStars from "./ui/RatingStars.jsx";
 import Categorybutton from "./categorybutton.jsx";
 import { getCategories } from "../services/categories";
+import { sanitizeText, sanitizeUrlPart } from "../utils/sanitize.js";
 
 export default function Receptdetail() {
 	const navigate = useNavigate();
@@ -32,19 +33,28 @@ export default function Receptdetail() {
 	const [categories, setCategories] = useState([]);
 
 	useEffect(() => {
-        getCategories()
-            .then((data) => {
-                console.log("Categories from API:", data);
-                setCategories(data);
-            })
-            .catch((err) => console.error("Failed to load categories:", err));
-    }, []);
+		getCategories()
+			.then((data) => {
+				console.log("Categories from API:", data);
+				setCategories(data);
+			})
+			.catch((err) => console.error("Failed to load categories:", err));
+	}, []);
 
 	useEffect(() => {
 		if (!recipeId) return;
 		fetch(`https://grupp4-pkfud.reky.se/recipes/${recipeId}/comments`)
 			.then((res) => res.json())
-			.then((data) => setComments(Array.isArray(data) ? data : []))
+			.then((data) => {
+				const list = Array.isArray(data) ? data : [];
+				// sanitize incoming comments
+				const safe = list.map((c) => ({
+					...c,
+					name: sanitizeText(c?.name, 60),
+					comment: sanitizeText(c?.comment, 2000),
+				}));
+				setComments(safe);
+			})
 			.catch(() => setComments([]));
 	}, [recipeId]);
 
@@ -112,8 +122,8 @@ export default function Receptdetail() {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
-						name: name.trim(),
-						comment: comment.trim(),
+						name: sanitizeText(name, 60),
+						comment: sanitizeText(comment, 2000),
 					}),
 				}
 			);
@@ -131,7 +141,14 @@ export default function Receptdetail() {
 				`https://grupp4-pkfud.reky.se/recipes/${recipeId}/comments`
 			);
 			const newComments = await commentsRes.json();
-			setComments(Array.isArray(newComments) ? newComments : []);
+			const list = Array.isArray(newComments) ? newComments : [];
+			setComments(
+				list.map((c) => ({
+					...c,
+					name: sanitizeText(c?.name, 60),
+					comment: sanitizeText(c?.comment, 2000),
+				}))
+			);
 
 			alert("Kommentar skickad");
 		} catch (e) {
@@ -151,10 +168,10 @@ export default function Receptdetail() {
 				<div className="hero-search">
 					<SearchBar
 						value={query}
-						onChange={setQuery}
+						onChange={(v) => setQuery(sanitizeText(v, 120))}
 						onSubmit={(val) => {
-							const v = (val || "").trim();
-							navigate(v ? `/?q=${encodeURIComponent(v)}` : "/");
+							const q = sanitizeUrlPart(val, 120)
+							navigate(q ? `/?q=${q}` : "/");
 						}}
 						placeholder="Sök recept eller ingrediens…"
 					/>
@@ -168,10 +185,10 @@ export default function Receptdetail() {
 						<Categorybutton
 							key={cat.name}
 							name={cat.name}
-							isActive={selectedCategory === cat.dbCategory}
+							isActive={selectedCategory === cat.name}
 							onClick={() =>
 								setSelectedCategory(
-									selectedCategory === cat.dbCategory ? null : cat.dbCategory
+									selectedCategory === cat.name ? null : cat.name
 								)
 							}
 						/>
@@ -336,7 +353,11 @@ export default function Receptdetail() {
 							onChange={(e) => setComment(e.target.value)}
 							disabled={isSubmitted}
 						/>
-						<button className="btn" onClick={sendComment} disabled={isSubmitted}>
+						<button
+							className="btn"
+							onClick={sendComment}
+							disabled={isSubmitted}
+						>
 							Skicka
 						</button>
 					</div>

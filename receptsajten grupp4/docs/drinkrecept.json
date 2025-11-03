@@ -1,0 +1,280 @@
+[
+	{
+		"title": "Moscow Mule",
+		"description": "Denna cocktail, med sin distinkta blandning av vodka, ginger beer och limejuice, erbjuder en unik kombination av uppfriskande och kryddig smak.",
+		"ratings": [],
+		"imageUrl": "https://moor.cl/wp-content/uploads/2023/08/moscow-mule-cobre-texturizado-3.jpg",
+		"timeInMins": 5,
+		"price": 2,
+		"categories": ["Vodka"],
+		"instructions": [
+			"Häll vodka och limejuice i ett Moscow Mule-glas.",
+			"Fyll glaset till hälften med krossad is.",
+			"Tillsätt ginger beer (inte att förväxla med ginger ale) och rör om varsamt.",
+			"Fyll upp resten av glaset med is."
+		],
+		"ingredients": [
+			{ "name": "Vodka", "amount": 4, "unit": "cl" },
+			{ "name": "Limejuice", "amount": 2, "unit": "cl" },
+			{ "name": "Ginger Beer", "amount": 10, "unit": "cl" },
+			{ "name": "Lime", "amount": 1, "unit": "st" },
+			{ "name": "Mynta", "amount": 1, "unit": "st" }
+		],
+		"avgRating": []
+	},
+	{
+		"title": "Pink Spritz",
+		"description": "En fräsch och somrig cocktail som kombinerar bäriga toner med bubblor och citrus. Serveras gärna i vinglas och toppas med färska jordgubbar för extra färg och smak.",
+		"ratings": [],
+		"imageUrl": "https://i.pinimg.com/originals/f3/55/cd/f355cdf0e957d2e1f3b64e0eb8a28180.jpg",
+		"timeInMins": 5,
+		"price": 2,
+		"categories": ["Vodka"],
+		"instructions": [
+			"Fyll ett vinglas rikligt med is.",
+			"Häll i Explorer Röda Bär, mousserande rosé och citronläsk.",
+			"Skiva en jordgubbe tunt och lägg i glaset tillsammans med en skiva lime.",
+			"Rör om varsamt och servera direkt."
+		],
+		"ingredients": [
+			{ "name": "Explorer Röda Bär", "amount": 4, "unit": "cl" },
+			{ "name": "Mousserande rosé", "amount": 10, "unit": "cl" },
+			{ "name": "Sprite (citronläsk)", "amount": 5, "unit": "cl" },
+			{ "name": "Jordgubbar", "amount": 1, "unit": "st" },
+			{ "name": "Lime", "amount": 1, "unit": "st" }
+		],
+		"avgRating": null
+	},
+	{
+		"title": "Pornstar Martini",
+		"description": "En lyxig och tropisk drink med tydlig smak av passionsfrukt och vanilj – perfekt att servera med ett litet glas bubbel vid sidan av för den rätta känslan.",
+		"ratings": [],
+		"imageUrl": "https://tse3.mm.bing.net/th/id/OIP.fKhA0exWOBT1-MFxfaz4HgHaHa?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3",
+		"timeInMins": 10,
+		"price": 3,
+		"categories": ["Vodka"],
+		"instructions": [
+			"Dela passionsfrukterna och gröp ur tre av halvorna i en shaker. Spara den sista halvan till garnering.",
+			"Tillsätt vaniljvodka, likör, sockerlag och limejuice.",
+			"Fyll shakern med is och skaka kraftigt.",
+			"Sila upp i ett kylt cocktailglas.",
+			"Lägg i en halv passionsfrukt och servera tillsammans med ett shotglas med kall champagne eller mousserande vin vid sidan."
+		],
+		"ingredients": [
+			{ "name": "Vaniljvodka", "amount": 6, "unit": "cl" },
+			{
+				"name": "Passionsfruktslikör (t.ex. Passoã)",
+				"amount": 1.5,
+				"unit": "cl"
+			},
+			{ "name": "Vaniljsockerlag", "amount": 1.5, "unit": "cl" },
+			{ "name": "Limejuice", "amount": 1.5, "unit": "cl" },
+			{ "name": "Passionsfrukt", "amount": 2, "unit": "st" },
+			{ "name": "Champagne (eller bubbel)", "amount": 6, "unit": "cl" }
+		],
+		"avgRating": null
+	},
+	{
+		"title": "Mojito",
+		"description": "En kubansk klassiker med frisk lime, sötma och uppfriskande mynta. En tidlös cocktail som passar perfekt i sommarvärmen – lika god som enkel att blanda.",
+		"ratings": [],
+		"imageUrl": "https://images.cocktailwave.com/mojito.png",
+		"timeInMins": 5,
+		"price": 2,
+		"categories": ["Rom"],
+		"instructions": [
+			"Häll rom, limejuice och sockerlag i ett highball-glas.",
+			"Lägg i några myntablad och pressa dem lätt med en sked eller muddler – undvik att mosa dem helt.",
+			"Fyll glaset med isbitar.",
+			"Toppa med sodavatten och rör om varsamt."
+		],
+		"ingredients": [
+			{
+				"name": "Ljus rom (gärna Havana Club Añejo 3 Años)",
+				"amount": 4,
+				"unit": "cl"
+			},
+			{ "name": "Limejuice", "amount": 3, "unit": "cl" },
+			{ "name": "Sockerlag", "amount": 3, "unit": "cl" },
+			{ "name": "Sodavatten", "amount": 4, "unit": "cl" },
+			{ "name": "Mynta", "amount": 1, "unit": "st" }
+		],
+		"avgRating": null
+	},
+	{
+		"title": "Strawberry Daiquiri",
+		"description": "En fruktig twist på den klassiska daiquirin, där färska jordgubbar och lime skapar en perfekt balans mellan syra och sötma. En somrig favorit som är både frisk och elegant.",
+		"ratings": [],
+		"imageUrl": "https://img.freepik.com/premium-photo/frozen-strawberry-daiquiri-cocktail-isolated-white-background_123827-30381.jpg?w=2000",
+		"timeInMins": 5,
+		"price": 2,
+		"categories": ["Rom"],
+		"instructions": [
+			"Muddla jordgubbarna i en shaker.",
+			"Tillsätt rom, limejuice, sockerlag och jordgubbssaft.",
+			"Skaka med is tills drinken är väl kyld.",
+			"Sila upp i ett kylt cocktailglas och garnera."
+		],
+		"ingredients": [
+			{ "name": "Ljus rom", "amount": 5, "unit": "cl" },
+			{ "name": "Limejuice", "amount": 2.5, "unit": "cl" },
+			{ "name": "Sockerlag", "amount": 1, "unit": "cl" },
+			{ "name": "Jordgubbssaft (koncentrat)", "amount": 1, "unit": "cl" },
+			{ "name": "Färska jordgubbar", "amount": 4, "unit": "st" }
+		],
+		"avgRating": null
+	},
+	{
+		"title": "Mai Tai med blodapelsin",
+		"description": "En tropisk klassiker med en frisk twist av blodapelsin. Ursprungligen skapad 1944 av Trader Vic, blev drinken snabbt en tiki-legend – och denna variant förhöjer den med djup fruktighet.",
+		"ratings": [],
+		"imageUrl": "https://elcoctelero.com/wp-content/uploads/2020/09/cocktail-mai-tai.jpg",
+		"timeInMins": 5,
+		"price": 2,
+		"categories": ["Rom"],
+		"instructions": [
+			"Fyll ett stort glas med is.",
+			"Häll i rom, limejuice, sockerlag och blodapelsinjuice.",
+			"Rör om ordentligt.",
+			"Toppa med ett par droppar Angostura bitter om du har."
+		],
+		"ingredients": [
+			{
+				"name": "Mörk rom (t.ex. Barracuda Caribbean Dark)",
+				"amount": 10,
+				"unit": "cl"
+			},
+			{ "name": "Limejuice", "amount": 3, "unit": "cl" },
+			{ "name": "Sockerlag", "amount": 3, "unit": "cl" },
+			{ "name": "Färskpressad blodapelsinjuice", "amount": 10, "unit": "cl" },
+			{ "name": "Angostura bitter", "amount": 2, "unit": "dash" }
+		],
+		"avgRating": null
+	},
+	{
+		"title": "Gin & Tonic",
+		"description": "En tidlös och uppfriskande cocktail som låter ginen stå i centrum, perfekt balanserad med bitter sötma från tonicen. Enkel, elegant och alltid rätt.",
+		"ratings": [],
+		"imageUrl": "https://tse4.mm.bing.net/th/id/OIP.OuJ4UOy0MBvOlipxMypAFwHaLH?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3",
+		"timeInMins": 2,
+		"price": 1,
+		"categories": ["Gin"],
+		"instructions": [
+			"Fyll ett highball-glas med rikligt med is.",
+			"Häll i gin och fyll upp med tonic.",
+			"Rör om varsamt och garnera med en citronskiva."
+		],
+		"ingredients": [
+			{ "name": "Gin", "amount": 4, "unit": "cl" },
+			{ "name": "Tonic", "amount": 10, "unit": "cl" }
+		],
+		"avgRating": null
+	},
+	{
+		"title": "Gin Sour",
+		"description": "En fräsch och balanserad cocktail med syrlig citron, sötma från sockerlag och en sammetslen äggviteskumtopp. En sofistikerad favorit bland ginälskare.",
+		"ratings": [],
+		"imageUrl": "https://tse1.mm.bing.net/th/id/OIP.fQed65wORuJ6ubvJ14v7ugHaLH?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3",
+		"timeInMins": 5,
+		"price": 2,
+		"categories": ["Gin"],
+		"instructions": [
+			"Häll gin, citronjuice, sockerlag och äggvita i en shaker utan is. Skaka kraftigt tills ett skum bildats (dry shake).",
+			"Tillsätt is och skaka igen.",
+			"Sila upp i ett kylt cocktailglas och garnera."
+		],
+		"ingredients": [
+			{ "name": "Gin", "amount": 6, "unit": "cl" },
+			{ "name": "Citronjuice", "amount": 4, "unit": "cl" },
+			{ "name": "Sockerlag", "amount": 4, "unit": "cl" },
+			{ "name": "Äggvita", "amount": 2, "unit": "cl" }
+		],
+		"avgRating": null
+	},
+	{
+		"title": "Negroni",
+		"description": "En bitter och kraftfull klassiker som är lika elegant som enkel. Negroni är en självklar aperitif med djup, komplex smak.",
+		"ratings": [],
+		"imageUrl": "https://addictedtoallthingspretty.com/wp-content/uploads/2024/11/negroni-cocktail-recipe-1730997960.jpg",
+		"timeInMins": 5,
+		"price": 2,
+		"categories": ["Gin"],
+		"instructions": [
+			"Fyll ett lowball-glas med is.",
+			"Häll i gin, vermouth och Campari direkt i glaset.",
+			"Rör om och garnera med ett strimlat apelsinskal."
+		],
+		"ingredients": [
+			{ "name": "Gin", "amount": 3, "unit": "cl" },
+			{ "name": "Röd vermouth", "amount": 3, "unit": "cl" },
+			{ "name": "Campari", "amount": 3, "unit": "cl" }
+		],
+		"avgRating": null
+	},
+	{
+		"title": "Klassisk Margarita",
+		"description": "En frisk och syrlig favorit från Mexiko. Margarita är en given klassiker med perfekt balans mellan tequila, citrus och sötma.",
+		"ratings": [],
+		"imageUrl": "https://www.isabeleats.com/wp-content/uploads/2018/02/classic-margarita-recipe-small-5.jpg",
+		"timeInMins": 10,
+		"price": 3,
+		"categories": ["Tequila"],
+		"instructions": [
+			"Fukta glasets kant med en limeklyfta och doppa i flingsalt.",
+			"Fyll en shaker med is och tillsätt tequila, apelsinlikör, limejuice och eventuellt sockerlag.",
+			"Skaka ordentligt och sila upp i ett kylt glas på fot.",
+			"Garnera med en limeklyfta."
+		],
+		"ingredients": [
+			{ "name": "Tequila", "amount": 4, "unit": "cl" },
+			{ "name": "Apelsinlikör", "amount": 2, "unit": "cl" },
+			{ "name": "Limejuice", "amount": 2, "unit": "cl" },
+			{ "name": "Sockerlag", "amount": 1, "unit": "cl" }
+		],
+		"avgRating": null
+	},
+	{
+		"title": "Paloma",
+		"description": "En lätt och läskande tequila-cocktail med fruktiga toner och mild beska. Paloma är en mexikansk klassiker perfekt för varma dagar.",
+		"ratings": [],
+		"imageUrl": "https://insanelygoodrecipes.com/wp-content/uploads/2024/02/Paloma-Cocktail-in-Glasses.jpg",
+		"timeInMins": 5,
+		"price": 2,
+		"categories": ["Tequila"],
+		"instructions": [
+			"Fyll ett highball-glas med is.",
+			"Häll i tequila och toppa med pink grapefruit soda.",
+			"Rör om lätt och garnera med en skiva blodgrape."
+		],
+		"ingredients": [
+			{ "name": "Tequila (100% agave)", "amount": 5, "unit": "cl" },
+			{ "name": "Pink grapefruit soda", "amount": 10, "unit": "cl" }
+		],
+		"avgRating": null
+	},
+	{
+		"title": "Tequila Sunrise",
+		"description": "En vacker och söt drink som för tankarna till varma soluppgångar. Tequila Sunrise är lika god som den är iögonfallande.",
+		"ratings": [],
+		"imageUrl": "https://www.shakedrinkrepeat.com/wp-content/uploads/2021/07/tequila-sunrise-7.jpg",
+		"timeInMins": 10,
+		"price": 3,
+		"categories": ["Tequila"],
+		"instructions": [
+			"Fyll ett högt glas med is.",
+			"Häll i tequila och apelsinjuice och rör om.",
+			"Häll försiktigt i grenadin längs glasets insida så den sjunker till botten.",
+			"Garnera med en apelsinskiva."
+		],
+		"ingredients": [
+			{ "name": "Tequila", "amount": 5, "unit": "cl" },
+			{
+				"name": "Apelsinjuice (gärna färskpressad)",
+				"amount": 10,
+				"unit": "cl"
+			},
+			{ "name": "Grenadin", "amount": 3, "unit": "cl" }
+		],
+		"avgRating": null
+	}
+]

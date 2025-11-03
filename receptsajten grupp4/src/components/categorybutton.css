@@ -1,0 +1,29 @@
+.hero nav .categorybutton {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.hero nav .categorybutton.active {
+    background-color: #444 !important;
+    border: 2px solid white;
+}
+
+@media (max-width: 720px) {
+    .hero nav .categorybutton {
+        padding: 5px 9px;
+        font-size: 10px;
+    }
+    
+}
+
+    @media (max-width: 420px) {
+        .hero nav .categorybutton {
+            padding: 5px 9px;
+            font-size: 6px;
+        }
+    }

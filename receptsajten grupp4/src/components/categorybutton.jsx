@@ -6,13 +6,21 @@ import "./categorybutton.css";
 export default function CategoryButton({ name, isActive, count, onClick }) {
   const navigate = useNavigate();
 
-  // When the button is clicked, go to the category page
   const handleClick = () => {
 
     if (onClick) {
       onClick();
     } else {
-      const categoryId = name.toLowerCase().replace(/\s*drinkar$/i, "").replace(/\s+/g, "-");
+      let categoryId = name.toLowerCase();
+      
+      if (categoryId.endsWith(' drinkar')) {
+        categoryId = categoryId.slice(0, -8);
+      } else if (categoryId.endsWith('drinkar')) {
+        categoryId = categoryId.slice(0, -7); 
+      }
+      
+      categoryId = categoryId.replace(/\s+/g, "-");
+      
       if (isActive) {
         navigate("/");
       } else {

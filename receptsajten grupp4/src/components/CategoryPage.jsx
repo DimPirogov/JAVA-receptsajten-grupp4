@@ -23,10 +23,11 @@ export default function CategoryPage() {
 	useEffect(() => {
 		getCategories()
 			.then((data) => {
-				console.log("Categories from API:", data);
+				
 				setCategories(data);
 			})
-			.catch((err) => console.error("Failed to load categories:", err));
+			.catch(() => {
+			});
 	}, []);
 
 	// Map route param ("gin") -> real backend category key ("gindrinkar")
@@ -77,7 +78,28 @@ export default function CategoryPage() {
 		});
 	}, [recipes, activeSlug, query]);
 
-	if (loading) return <div style={{ padding: 16 }}>Loading recipes…</div>;
+	const countsByCat = useMemo(() => {
+		const map = {};
+		(recipes || []).forEach((r) => {
+			(r?.categories || []).forEach((c) => {
+				const id = String(c || "")
+					.toLowerCase()
+					.replace(/\s*drinkar$/i, "")
+					.replace(/\s+/g, "-");
+				map[id] = (map[id] || 0) + 1;
+			});
+		});
+		return map;
+	}, [recipes]);
+
+	const toId = (name) =>
+		String(name || "")
+			.toLowerCase()
+			.replace(/\s*drinkar$/i, "")
+			.replace(/\s+/g, "-");
+
+	if (loading) 
+		return <div style={{ padding: 16 }}>Loading recipes…</div>;
 	if (error)
 		return <div style={{ padding: 16, color: "crimson" }}>Error: {error}</div>;
 
@@ -105,10 +127,18 @@ export default function CategoryPage() {
 
 				<nav>
 					{categories.map((cat) => {
-						const id = (cat.name || "").toLowerCase();
+						const id = toId(cat.name);
+						const label = `${id}drinkar`;
+						const count = countsByCat[id] || 0;
+
 						return (
 							<Link key={cat.name} to={`/category/${id}`} style={{ textDecoration: "none" }}>
-								<CategoryButton name={cat.name} isActive={categoryId === id} />
+								<CategoryButton
+									name={cat.name}
+									label={label}
+									count={count}
+									isActive={categoryId === id}
+								/>
 							</Link>
 						);
 					})}

@@ -23,7 +23,6 @@ export default function CategoryPage() {
 	useEffect(() => {
 		getCategories()
 			.then((data) => {
-				
 				setCategories(data);
 			})
 			.catch(() => {
@@ -126,23 +125,26 @@ export default function CategoryPage() {
 				</div>
 
 				<nav>
-					{categories.map((cat) => {
-						const id = toId(cat.name);
-						const label = `${id}drinkar`;
-						const count = countsByCat[id] || 0;
+                    {categories.map((cat) => {
+                        const id = toId(cat.name);
+                        const count = countsByCat[id] || 0;
+                        // Format: "gindrinkar" -> "Gin Drinkar"
+                        const baseCategory = cat.name.replace(/drinkar$/i, '');
+                        const displayName = baseCategory.charAt(0).toUpperCase() + baseCategory.slice(1) + 'drinkar';
 
-						return (
-							<Link key={cat.name} to={`/category/${id}`} style={{ textDecoration: "none" }}>
-								<CategoryButton
-									name={cat.name}
-									label={label}
-									count={count}
-									isActive={categoryId === id}
-								/>
-							</Link>
-						);
-					})}
-				</nav>
+                        console.log('Category:', cat.name, 'ID:', id, 'Label:', displayName, 'Count:', count);
+
+                        return (
+                            <Link key={cat.name} to={`/category/${id}`} style={{ textDecoration: "none" }}>
+                                <CategoryButton
+                                    name={displayName}
+                                    count={count}
+                                    isActive={categoryId === id}
+                                />
+                            </Link>
+                        );
+                    })}
+                </nav>
 			</header>
 
 			<section className="drink-list">

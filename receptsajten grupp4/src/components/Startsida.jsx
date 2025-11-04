@@ -1,6 +1,6 @@
 // src/components/Startsida.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { getRecipes } from "../services/recipes";
 import ReceptLista from "./Receptlista";
 import SearchBar from "./ui/SearchBar.jsx";
@@ -14,12 +14,22 @@ export default function Startsida() {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
-	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [query, setQuery] = useState("");
 	const [categories, setCategories] = useState([]);
 
 	const location = useLocation();
 	const navigate = useNavigate();
+	const { categoryId } = useParams();
+
+	const selectedCategory = useMemo(() => {
+        if (!categoryId) return null;
+        // Find matching category (e.g., "gin" -> "gindrinkar")
+        const found = categories.find(cat => {
+            const baseCategory = cat.name.toLowerCase().replace(/drinkar$/i, '');
+            return baseCategory === categoryId.toLowerCase();
+        });
+        return found ? found.name : null;
+    }, [categoryId, categories]);
 
 	// 初始化 & 每次 URL 变化时，从 ?q= 读入搜索词
 	useEffect(() => {
@@ -119,18 +129,20 @@ export default function Startsida() {
                         const baseCategory = cat.name.replace(/drinkar$/i, '');
                         const displayName = baseCategory.charAt(0).toUpperCase() + baseCategory.slice(1) + 'drinkar';
 
+                        const categoryUrlId = cat.name.toLowerCase().replace(/drinkar$/i, '').replace(/\s+/g, '-');
+
                         return (
-                            <Categorybutton
-                                key={cat.name}
-                                name={displayName}
-                                count={count}
-                                isActive={selectedCategory === cat.name}
-                                onClick={() =>
-                                    setSelectedCategory(
-                                        selectedCategory === cat.name ? null : cat.name
-                                    )
-                                }
-                            />
+                            <Link 
+                                key={cat.name} 
+                                to={selectedCategory === cat.name ? "/" : `/category/${categoryUrlId}`}
+                                style={{ textDecoration: "none" }}
+                            >
+                                <Categorybutton
+                                    name={displayName}
+                                    count={count}
+                                    isActive={selectedCategory === cat.name}
+                                />
+                            </Link>
                         );
                     })}
                 </nav>

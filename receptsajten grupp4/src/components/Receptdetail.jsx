@@ -32,6 +32,17 @@ export default function Receptdetail() {
 	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [categories, setCategories] = useState([]);
 
+	const [recipes, setRecipes] = useState([]);
+    const countsByCat = React.useMemo(() => {
+        const map = {};
+        (recipes || []).forEach((r) => {
+            (r?.categories || []).forEach((c) => {
+                map[c] = (map[c] || 0) + 1;
+            });
+        });
+        return map;
+    }, [recipes]);
+
 	useEffect(() => {
 		getCategories()
 			.then((data) => {
@@ -65,6 +76,7 @@ export default function Receptdetail() {
 			.then((data) => {
 				if (!alive) return;
 				const list = Array.isArray(data) ? data : [];
+				setRecipes(list);
 				const found = list.find(
 					(r) => String(r._id ?? r.id) === String(recipeId)
 				);
@@ -181,19 +193,27 @@ export default function Receptdetail() {
 					<h1>{title}</h1>
 				</div>
 				<nav>
-					{categories.map((cat) => (
-						<Categorybutton
-							key={cat.name}
-							name={cat.name}
-							isActive={selectedCategory === cat.name}
-							onClick={() =>
-								setSelectedCategory(
-									selectedCategory === cat.name ? null : cat.name
-								)
-							}
-						/>
-					))}
-				</nav>
+                    {categories.map((cat) => {
+                        const count = countsByCat[cat.name] || 0;
+                        // Format: "gindrinkar" -> "Gin Drinkar"
+                        const baseCategory = cat.name.replace(/drinkar$/i, '');
+                        const displayName = baseCategory.charAt(0).toUpperCase() + baseCategory.slice(1) + 'drinkar';
+
+                        return (
+                            <Categorybutton
+                                key={cat.name}
+                                name={displayName}
+                                count={count}
+                                isActive={selectedCategory === cat.name}
+                                onClick={() =>
+                                    setSelectedCategory(
+                                        selectedCategory === cat.name ? null : cat.name
+                                    )
+                                }
+                            />
+                        );
+                    })}
+                </nav>
 			</header>
 
 			{/* Frame 2：信息条 */}

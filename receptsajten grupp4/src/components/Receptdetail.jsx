@@ -195,22 +195,20 @@ export default function Receptdetail() {
 				<nav>
                     {categories.map((cat) => {
                         const count = countsByCat[cat.name] || 0;
-                        // Format: "gindrinkar" -> "Gin Drinkar"
                         const baseCategory = cat.name.replace(/drinkar$/i, '');
                         const displayName = baseCategory.charAt(0).toUpperCase() + baseCategory.slice(1) + 'drinkar';
 
+                        // Convert to URL-friendly id (e.g., "gindrinkar" -> "gin")
+                        const categoryId = cat.name.toLowerCase().replace(/drinkar$/i, '').replace(/\s+/g, '-');
+
                         return (
-                            <Categorybutton
-                                key={cat.name}
-                                name={displayName}
-                                count={count}
-                                isActive={selectedCategory === cat.name}
-                                onClick={() =>
-                                    setSelectedCategory(
-                                        selectedCategory === cat.name ? null : cat.name
-                                    )
-                                }
-                            />
+                            <Link key={cat.name} to={`/category/${categoryId}`} style={{ textDecoration: "none" }}>
+                                <Categorybutton
+                                    name={displayName}
+                                    count={count}
+                                    isActive={false}
+                                />
+                            </Link>
                         );
                     })}
                 </nav>

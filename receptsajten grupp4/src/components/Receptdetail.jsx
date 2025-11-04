@@ -29,7 +29,6 @@ export default function Receptdetail() {
 	const [query, setQuery] = useState("");
 	const [comments, setComments] = useState([]);
 	const [isSubmitted, setIsSubmitted] = useState(false);
-	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [categories, setCategories] = useState([]);
 
 	const [recipes, setRecipes] = useState([]);

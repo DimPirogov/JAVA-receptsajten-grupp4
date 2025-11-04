@@ -23,10 +23,10 @@ export default function CategoryPage() {
 	useEffect(() => {
 		getCategories()
 			.then((data) => {
-				console.log("Categories from API:", data);
 				setCategories(data);
 			})
-			.catch((err) => console.error("Failed to load categories:", err));
+			.catch(() => {
+			});
 	}, []);
 
 	// Map route param ("gin") -> real backend category key ("gindrinkar")
@@ -77,7 +77,28 @@ export default function CategoryPage() {
 		});
 	}, [recipes, activeSlug, query]);
 
-	if (loading) return <div style={{ padding: 16 }}>Loading recipes…</div>;
+	const countsByCat = useMemo(() => {
+		const map = {};
+		(recipes || []).forEach((r) => {
+			(r?.categories || []).forEach((c) => {
+				const id = String(c || "")
+					.toLowerCase()
+					.replace(/\s*drinkar$/i, "")
+					.replace(/\s+/g, "-");
+				map[id] = (map[id] || 0) + 1;
+			});
+		});
+		return map;
+	}, [recipes]);
+
+	const toId = (name) =>
+		String(name || "")
+			.toLowerCase()
+			.replace(/\s*drinkar$/i, "")
+			.replace(/\s+/g, "-");
+
+	if (loading) 
+		return <div style={{ padding: 16 }}>Loading recipes…</div>;
 	if (error)
 		return <div style={{ padding: 16, color: "crimson" }}>Error: {error}</div>;
 
@@ -104,15 +125,26 @@ export default function CategoryPage() {
 				</div>
 
 				<nav>
-					{categories.map((cat) => {
-						const id = (cat.name || "").toLowerCase();
-						return (
-							<Link key={cat.name} to={`/category/${id}`} style={{ textDecoration: "none" }}>
-								<CategoryButton name={cat.name} isActive={categoryId === id} />
-							</Link>
-						);
-					})}
-				</nav>
+                    {categories.map((cat) => {
+                        const id = toId(cat.name);
+                        const count = countsByCat[id] || 0;
+                        // Format: "gindrinkar" -> "Gin Drinkar"
+                        const baseCategory = cat.name.replace(/drinkar$/i, '');
+                        const displayName = baseCategory.charAt(0).toUpperCase() + baseCategory.slice(1) + 'drinkar';
+
+                        console.log('Category:', cat.name, 'ID:', id, 'Label:', displayName, 'Count:', count);
+
+                        return (
+                            <Link key={cat.name} to={`/category/${id}`} style={{ textDecoration: "none" }}>
+                                <CategoryButton
+                                    name={displayName}
+                                    count={count}
+                                    isActive={categoryId === id}
+                                />
+                            </Link>
+                        );
+                    })}
+                </nav>
 			</header>
 
 			<section className="drink-list">

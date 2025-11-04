@@ -59,7 +59,7 @@ describe("Startsida", () => {
 
 		// categories from data should be rendered as buttons
 		for (const c of mockCategories) {
-			expect(await screen.findByText(c.name)).toBeInTheDocument();
+			expect(await screen.findByText(`${c.name}drinkar`)).toBeInTheDocument();
 		}
 
 		// recipe titles should appear

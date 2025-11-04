@@ -73,6 +73,16 @@ export default function Startsida() {
 		});
 	}, [recipes, selectedCategory, query]);
 
+	const countsByCat = useMemo(() => {
+        const map = {};
+        (recipes || []).forEach((r) => {
+            (r?.categories || []).forEach((c) => {
+                map[c] = (map[c] || 0) + 1;
+            });
+        });
+        return map;
+    }, [recipes]);
+
 	// Always render the hero/header. The body below will show loading/error/empty states.
 	return (
 		<div className="drink-app">
@@ -103,19 +113,27 @@ export default function Startsida() {
 				</div>
 
 				<nav>
-					{categories.map((cat) => (
-						<Categorybutton
-							key={cat.name}
-							name={cat.name}
-							isActive={selectedCategory === cat.name}
-							onClick={() =>
-								setSelectedCategory(
-									selectedCategory === cat.name ? null : cat.name
-								)
-							}
-						/>
-					))}
-				</nav>
+                    {categories.map((cat) => {
+                        const count = countsByCat[cat.name] || 0;
+                        // Format: "gindrinkar" -> "Gin Drinkar"
+                        const baseCategory = cat.name.replace(/drinkar$/i, '');
+                        const displayName = baseCategory.charAt(0).toUpperCase() + baseCategory.slice(1) + 'drinkar';
+
+                        return (
+                            <Categorybutton
+                                key={cat.name}
+                                name={displayName}
+                                count={count}
+                                isActive={selectedCategory === cat.name}
+                                onClick={() =>
+                                    setSelectedCategory(
+                                        selectedCategory === cat.name ? null : cat.name
+                                    )
+                                }
+                            />
+                        );
+                    })}
+                </nav>
 			</header>
 
 			<section className="drink-list">

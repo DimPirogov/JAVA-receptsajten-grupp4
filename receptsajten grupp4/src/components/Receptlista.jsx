@@ -17,7 +17,6 @@ export default function ReceptLista({ recipe, onClick, index = 0 }) {
     e.stopPropagation(); // prevent triggering article onClick
     const id = recipe._id ?? recipe.id; // support both _id or id
     if (!id) {
-      console.warn("Recipe id not found on recipe:", recipe);
       return;
     }
     navigate(`/recipe/${id}`);

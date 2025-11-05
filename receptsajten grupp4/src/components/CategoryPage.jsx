@@ -132,8 +132,6 @@ export default function CategoryPage() {
                         const baseCategory = cat.name.replace(/drinkar$/i, '');
                         const displayName = baseCategory.charAt(0).toUpperCase() + baseCategory.slice(1) + 'drinkar';
 
-                        console.log('Category:', cat.name, 'ID:', id, 'Label:', displayName, 'Count:', count);
-
                         return (
                             <Link key={cat.name} to={`/category/${id}`} style={{ textDecoration: "none" }}>
                                 <CategoryButton

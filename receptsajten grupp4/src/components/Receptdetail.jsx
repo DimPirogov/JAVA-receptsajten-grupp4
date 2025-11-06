@@ -29,8 +29,18 @@ export default function Receptdetail() {
 	const [query, setQuery] = useState("");
 	const [comments, setComments] = useState([]);
 	const [isSubmitted, setIsSubmitted] = useState(false);
-	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [categories, setCategories] = useState([]);
+
+	const [recipes, setRecipes] = useState([]);
+    const countsByCat = React.useMemo(() => {
+        const map = {};
+        (recipes || []).forEach((r) => {
+            (r?.categories || []).forEach((c) => {
+                map[c] = (map[c] || 0) + 1;
+            });
+        });
+        return map;
+    }, [recipes]);
 
 	useEffect(() => {
 		getCategories()
@@ -65,6 +75,7 @@ export default function Receptdetail() {
 			.then((data) => {
 				if (!alive) return;
 				const list = Array.isArray(data) ? data : [];
+				setRecipes(list);
 				const found = list.find(
 					(r) => String(r._id ?? r.id) === String(recipeId)
 				);
@@ -181,19 +192,25 @@ export default function Receptdetail() {
 					<h1>{title}</h1>
 				</div>
 				<nav>
-					{categories.map((cat) => (
-						<Categorybutton
-							key={cat.name}
-							name={cat.name}
-							isActive={selectedCategory === cat.name}
-							onClick={() =>
-								setSelectedCategory(
-									selectedCategory === cat.name ? null : cat.name
-								)
-							}
-						/>
-					))}
-				</nav>
+                    {categories.map((cat) => {
+                        const count = countsByCat[cat.name] || 0;
+                        const baseCategory = cat.name.replace(/drinkar$/i, '');
+                        const displayName = baseCategory.charAt(0).toUpperCase() + baseCategory.slice(1) + 'drinkar';
+
+                        // Convert to URL-friendly id (e.g., "gindrinkar" -> "gin")
+                        const categoryId = cat.name.toLowerCase().replace(/drinkar$/i, '').replace(/\s+/g, '-');
+
+                        return (
+                            <Link key={cat.name} to={`/category/${categoryId}`} style={{ textDecoration: "none" }}>
+                                <Categorybutton
+                                    name={displayName}
+                                    count={count}
+                                    isActive={false}
+                                />
+                            </Link>
+                        );
+                    })}
+                </nav>
 			</header>
 
 			{/* Frame 2：信息条 */}

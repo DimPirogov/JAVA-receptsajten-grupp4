@@ -3,17 +3,29 @@ import { useNavigate } from "react-router-dom"; // for page navigation
 import "./categorybutton.css";
 
 // Category button component
-export default function CategoryButton({ name, isActive }) {
+export default function CategoryButton({ name, isActive, count, onClick }) {
   const navigate = useNavigate();
 
-  // When the button is clicked, go to the category page
   const handleClick = () => {
-    // convert category name into lowercase (like "gin", "rum", "vodka")
-    const categoryId = name.toLowerCase().replace("drinkar", "");
-    if (isActive) {
-      navigate("/");
-    }else {
-      navigate(`/category/${categoryId}`);
+
+    if (onClick) {
+      onClick();
+    } else {
+      let categoryId = name.toLowerCase();
+      
+      if (categoryId.endsWith(' drinkar')) {
+        categoryId = categoryId.slice(0, -8);
+      } else if (categoryId.endsWith('drinkar')) {
+        categoryId = categoryId.slice(0, -7); 
+      }
+      
+      categoryId = categoryId.replace(/\s+/g, "-");
+      
+      if (isActive) {
+        navigate("/");
+      } else {
+        navigate(`/category/${categoryId}`);
+      }
     }
   };
 
@@ -21,8 +33,11 @@ export default function CategoryButton({ name, isActive }) {
     <button
       className={`categorybutton ${isActive ? "active" : ""}`}
       onClick={handleClick}
+      aria-pressed={isActive}
+      aria-label={typeof count === "number" ? `${name} (${count})` : name}
     >
-      {name}
+      <span className="label">{name}</span>
+      {typeof count === "number" && <span className="count"> ({count})</span>}
     </button>
   );
 }

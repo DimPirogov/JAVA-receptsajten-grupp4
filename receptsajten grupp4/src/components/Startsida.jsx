@@ -1,6 +1,6 @@
 // src/components/Startsida.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { getRecipes } from "../services/recipes";
 import ReceptLista from "./Receptlista";
 import SearchBar from "./ui/SearchBar.jsx";
@@ -14,12 +14,22 @@ export default function Startsida() {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
-	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [query, setQuery] = useState("");
 	const [categories, setCategories] = useState([]);
 
 	const location = useLocation();
 	const navigate = useNavigate();
+	const { categoryId } = useParams();
+
+	const selectedCategory = useMemo(() => {
+        if (!categoryId) return null;
+        // Find matching category (e.g., "gin" -> "gindrinkar")
+        const found = categories.find(cat => {
+            const baseCategory = cat.name.toLowerCase().replace(/drinkar$/i, '');
+            return baseCategory === categoryId.toLowerCase();
+        });
+        return found ? found.name : null;
+    }, [categoryId, categories]);
 
 	// 初始化 & 每次 URL 变化时，从 ?q= 读入搜索词
 	useEffect(() => {
@@ -73,6 +83,16 @@ export default function Startsida() {
 		});
 	}, [recipes, selectedCategory, query]);
 
+	const countsByCat = useMemo(() => {
+        const map = {};
+        (recipes || []).forEach((r) => {
+            (r?.categories || []).forEach((c) => {
+                map[c] = (map[c] || 0) + 1;
+            });
+        });
+        return map;
+    }, [recipes]);
+
 	// Always render the hero/header. The body below will show loading/error/empty states.
 	return (
 		<div className="drink-app">
@@ -103,19 +123,29 @@ export default function Startsida() {
 				</div>
 
 				<nav>
-					{categories.map((cat) => (
-						<Categorybutton
-							key={cat.name}
-							name={cat.name}
-							isActive={selectedCategory === cat.name}
-							onClick={() =>
-								setSelectedCategory(
-									selectedCategory === cat.name ? null : cat.name
-								)
-							}
-						/>
-					))}
-				</nav>
+                    {categories.map((cat) => {
+                        const count = countsByCat[cat.name] || 0;
+                        // Format: "gindrinkar" -> "Gin Drinkar"
+                        const baseCategory = cat.name.replace(/drinkar$/i, '');
+                        const displayName = baseCategory.charAt(0).toUpperCase() + baseCategory.slice(1) + 'drinkar';
+
+                        const categoryUrlId = cat.name.toLowerCase().replace(/drinkar$/i, '').replace(/\s+/g, '-');
+
+                        return (
+                            <Link 
+                                key={cat.name} 
+                                to={selectedCategory === cat.name ? "/" : `/category/${categoryUrlId}`}
+                                style={{ textDecoration: "none" }}
+                            >
+                                <Categorybutton
+                                    name={displayName}
+                                    count={count}
+                                    isActive={selectedCategory === cat.name}
+                                />
+                            </Link>
+                        );
+                    })}
+                </nav>
 			</header>
 
 			<section className="drink-list">

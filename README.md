@@ -12,3 +12,7 @@ Branches
 Alla har fått access till github repot.
 
 kopiera och klistra in länken https://68dd1a34954bfab4e668ef6d--receptsajtengrupp4.netlify.app/ i webbläsare för att köra lokalt
+
+## Website
+
+https://receptsajtengruppen4.netlify.app/
